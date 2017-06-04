@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -25,6 +26,16 @@ public class Listener extends Python3BaseListener {
 	static String[] nombres_funciones = new String[90];
 	int[] numero_veces_funcion_llamada = new int[90];
 	public ProbModule probModule = new ProbModule(200);
+	private float result;
+	private boolean bCalculate = false;
+
+	public float getResult() {
+		return result;
+	}
+
+	public void setResult(float result) {
+		this.result = result;
+	}
 
 	Listener(Python3Parser parser1) {
 		parser = parser1;
@@ -103,8 +114,7 @@ public class Listener extends Python3BaseListener {
 	 */
 	@Override
 	public void enterAnd_expr(Python3Parser.And_exprContext ctx) {
-		probModule.addDerivation(ctx.getRuleIndex(),
-				ctx.invokingState);
+		probModule.addDerivation(ctx.getRuleIndex(), ctx.invokingState);
 		nombres_funciones[0] = "enterAnd_expr";
 		numero_veces_funcion_llamada[0] = numero_veces_funcion_llamada[0] + 1;
 	}
@@ -193,11 +203,10 @@ public class Listener extends Python3BaseListener {
 	 */
 	@Override
 	public void enterAtom(Python3Parser.AtomContext ctx) {
-		probModule.addDerivation(ctx.getRuleIndex(),
-				ctx.invokingState);
+		probModule.addDerivation(ctx.getRuleIndex(), ctx.invokingState);
 		nombres_funciones[6] = "enterAtom";
 		numero_veces_funcion_llamada[6] = numero_veces_funcion_llamada[6] + 1;
-		
+
 	}
 
 	/**
@@ -589,6 +598,41 @@ public class Listener extends Python3BaseListener {
 				ctx.invokingState);
 		nombres_funciones[32] = "enterFile_input";
 		numero_veces_funcion_llamada[32] = numero_veces_funcion_llamada[32] + 1;
+		if (bCalculate)
+			for (int i = 0; i < ctx.getChildCount(); i++) {
+				if (!ctx.getChild(i)
+						.getClass()
+						.equals(org.antlr.v4.runtime.tree.TerminalNodeImpl.class)) {
+					RuleContext child = (RuleContext) ctx.getChild(i);
+					result *= prob
+							* calculateChildProb(prob,
+									(RuleContext) ctx.getChild(i)); // Creo
+					// que
+					// esta
+					// mal
+					System.out.println(result);
+				}
+			}
+
+	}
+
+	private float calculateChildProb(float probFather, RuleContext parseTree) {
+		// TODO Auto-generated method stub
+		// FIXME PUTO
+		float probchil = probModule.probDerivation(parseTree.getRuleIndex(),parseTree.invokingState);
+		//System.out.println("Rule" + parseTree.getRuleIndex()+" Prob "+probchil+ "  Maliditas probabilidades hiajs de perra "+parseTree.invokingState);
+		for (int i = 0; i < parseTree.getChildCount(); i++) {
+			if (!parseTree.getChild(i).getClass()
+					.equals(org.antlr.v4.runtime.tree.TerminalNodeImpl.class)) {
+				RuleContext child = (RuleContext) parseTree.getChild(i);
+				probchil *= probchil * calculateChildProb(probchil, child); // Creo
+			}
+			// que
+			// esta
+			// mal
+		}
+		System.out.println(probchil);
+		return probchil;
 	}
 
 	/**
@@ -889,22 +933,22 @@ public class Listener extends Python3BaseListener {
 				ctx.invokingState);
 		nombres_funciones[52] = "enterPower";
 		numero_veces_funcion_llamada[52] = numero_veces_funcion_llamada[52] + 1;
-		/*
-		System.out.println("#######POWER#####");
-		System.out.println("ctx.getChildCount()" + ctx.getChildCount());
-		System.out.println("ctx.getRuleIndex()" + ctx.getRuleIndex());
-		System.out.println("ctx.getText()" + ctx.getText());
-		System.out.println("ctx.getChild(0)" + ctx.getChild(0));
-		System.out.println("ctx.getParent()" + ctx.getParent());
-		System.out.println("ctx.getPayload()" + ctx.getPayload());
-		System.out.println("ctx.getRuleContext()" + ctx.getRuleContext());
-		System.out.println("ctx.getSourceInterval()" + ctx.getSourceInterval());
-		System.out.println("ctx.getStart()" + ctx.getStart());
-		System.out.println("ctx.getStop()" + ctx.getStop());
-		System.out.println("" + ctx.getTokens(1));
-		// System.out.println(""+ctx.get);
-		 * 
-		 */
+		//
+		// System.out.println("#######POWER#####");
+		// System.out.println("ctx.getChildCount()" + ctx.getChildCount());
+		// System.out.println("ctx.getRuleIndex()" + ctx.getRuleIndex());
+		// System.out.println("ctx.getText()" + ctx.getText());
+		// System.out.println("ctx.getChild(0)" + ctx.getChild(0));
+		//
+		// System.out.println("ctx.getParent()" + ctx.getParent());
+		// System.out.println("ctx.getPayload()" + ctx.getPayload());
+		// System.out.println("ctx.getRuleContext()" + ctx.getRuleContext());
+		// System.out.println("ctx.getSourceInterval()" +
+		// ctx.getSourceInterval());
+		// System.out.println("ctx.getStart()" + ctx.getStart());
+		// System.out.println("ctx.getStop()" + ctx.getStop());
+		// System.out.println("" + ctx.getTokens(1)); //
+		// System.out.println("" + ctx.invokingState);
 
 	}
 
@@ -967,19 +1011,19 @@ public class Listener extends Python3BaseListener {
 		nombres_funciones[56] = "enterSimple_stmt";
 		numero_veces_funcion_llamada[56] = numero_veces_funcion_llamada[56] + 1;
 		/*
-		System.out.println("#######Simple_STMT#####");
-		System.out.println("ctx.getChildCount()" + ctx.getChildCount());
-		System.out.println("ctx.getRuleIndex()" + ctx.getRuleIndex());
-		System.out.println("ctx.getText()" + ctx.getText());
-		System.out.println("ctx.getChild(0)" + ctx.getChild(0));
-		System.out.println("ctx.getParent()" + ctx.getParent());
-		System.out.println("ctx.getPayload()" + ctx.getPayload());
-		System.out.println("ctx.getRuleContext()" + ctx.getRuleContext());
-		System.out.println("ctx.getSourceInterval()" + ctx.getSourceInterval());
-		System.out.println("ctx.getStart()" + ctx.getStart());
-		System.out.println("ctx.getStop()" + ctx.getStop());
-		System.out.println("" + ctx.getTokens(1));
-		*/
+		 * System.out.println("#######Simple_STMT#####");
+		 * System.out.println("ctx.getChildCount()" + ctx.getChildCount());
+		 * System.out.println("ctx.getRuleIndex()" + ctx.getRuleIndex());
+		 * System.out.println("ctx.getText()" + ctx.getText());
+		 * System.out.println("ctx.getChild(0)" + ctx.getChild(0));
+		 * System.out.println("ctx.getParent()" + ctx.getParent());
+		 * System.out.println("ctx.getPayload()" + ctx.getPayload());
+		 * System.out.println("ctx.getRuleContext()" + ctx.getRuleContext());
+		 * System.out.println("ctx.getSourceInterval()" +
+		 * ctx.getSourceInterval()); System.out.println("ctx.getStart()" +
+		 * ctx.getStart()); System.out.println("ctx.getStop()" + ctx.getStop());
+		 * System.out.println("" + ctx.getTokens(1));
+		 */
 	}
 
 	/**
@@ -1409,7 +1453,8 @@ public class Listener extends Python3BaseListener {
 
 	public void setCalculate() {
 		probModule.setCalculate();
-		
+		bCalculate = true;
+
 	}
 }
 

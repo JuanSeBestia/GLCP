@@ -2,21 +2,31 @@ public class ProbModule {
 	int[] sumRules;
 	int[] sumDervation;
 	boolean bAdd = true;
+	private float[] probDerivation;
 
 	public ProbModule(int i) {
 		sumRules = new int[i];
 		sumDervation = new int[30 * i];
+		probDerivation = new float[30 * i];
 	}
 
 	public float probDerivation(int rule, int derivation) {
-		if (rule > 0 && derivation > 0)
-			return sumDervation[derivation] / sumRules[rule];
-		else
-			return 0;
+		if (rule > 0 && derivation > 0) {
+			float aux = (float)(sumDervation[derivation]) / (float)sumRules[rule];
+			probDerivation[derivation] = aux;
+			return aux;
+		} else
+			return 1;
+	}
+
+	public float probDerivation(int derivation) {
+
+		return probDerivation[derivation];
+
 	}
 
 	public float addDerivation(int rule, int derivation) {
-		if (bAdd && rule > 0 && derivation > 0 ) {
+		if (bAdd && rule > 0 && derivation > 0) {
 			sumRules[rule]++;
 			sumDervation[derivation]++;
 
@@ -41,7 +51,7 @@ public class ProbModule {
 
 	public void setCalculate() {
 		bAdd = false;
-		
+
 	}
 
 }

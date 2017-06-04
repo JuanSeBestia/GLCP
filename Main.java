@@ -27,6 +27,9 @@ public class Main {
 		booksForTraining.add("D:\\Bibliotecas\\workspaceJuanSe\\plagio\\src\\Ejemplos\\Planetas.py");
 		GLCP glcp = new GLCP (booksForTraining);
 		
+		float result = glcp.getProb("D:\\Bibliotecas\\workspaceJuanSe\\plagio\\src\\Ejemplos\\basico.py");
+		System.out.println("RESULT + "+ result);
+		
 	}
 
 }

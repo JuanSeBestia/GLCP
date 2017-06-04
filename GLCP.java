@@ -13,7 +13,7 @@ public class GLCP {
 	private Python3Parser parser;
 	private ParseTreeWalker walker;
 	private Listener listener;
-
+	
 	public GLCP(List<String> booksForTraining) throws Exception {
 		System.out.println("####### Training #####");
 		for (String book : booksForTraining) {
@@ -39,8 +39,8 @@ public class GLCP {
 								// las probabilidades
 	}
 
-	public GLCP(String codeIn) throws Exception {
-
+	public float getProb(String codeIn) throws Exception {
+		listener.setResult(0);
 		System.out.println("####### Calculating #####");
 		input = new ANTLRFileStream(codeIn);
 		lexer = new Python3Lexer(input);
@@ -57,6 +57,7 @@ public class GLCP {
 		System.out.println(listener.probModule.toStringPositive());
 
 		System.out.println("####### End Calculating #####");
+		return  listener.getResult();
 	}
 
 }
