@@ -35,6 +35,28 @@ public class GLCP {
 
 		}
 		System.out.println("####### End Training #####");
+		listener.setCalculate();// desactiva que el Listener siga sumando para
+								// las probabilidades
+	}
+
+	public GLCP(String codeIn) throws Exception {
+
+		System.out.println("####### Calculating #####");
+		input = new ANTLRFileStream(codeIn);
+		lexer = new Python3Lexer(input);
+		tokens = new CommonTokenStream(lexer);
+		parser = new Python3Parser(tokens);
+		ParseTree tree = parser.file_input(); // comienza el análisis en la
+		// regla inicial
+		String word = tree.toStringTree(parser);
+		System.out.println("\n****************************Arbol de " + codeIn
+				+ "*********************************************\n" + word
+				+ "\n");
+		walker = new ParseTreeWalker();
+		walker.walk(listener, tree);
+		System.out.println(listener.probModule.toStringPositive());
+
+		System.out.println("####### End Calculating #####");
 	}
 
 }

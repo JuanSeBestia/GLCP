@@ -23,8 +23,8 @@ public class Main {
 		 * ANTLRInputStream(System.in));
 		 */
 		List<String> booksForTraining = new ArrayList<String>();
-		booksForTraining.add("D:\\Bibliotecas\\workspaceJuanSe\\plagio\\src\\Planetas.py");
-		booksForTraining.add("D:\\Bibliotecas\\workspaceJuanSe\\plagio\\src\\Planetas.py");
+		booksForTraining.add("D:\\Bibliotecas\\workspaceJuanSe\\plagio\\src\\Ejemplos\\basico.py");
+		booksForTraining.add("D:\\Bibliotecas\\workspaceJuanSe\\plagio\\src\\Ejemplos\\Planetas.py");
 		GLCP glcp = new GLCP (booksForTraining);
 		
 	}

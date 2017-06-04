@@ -1,6 +1,7 @@
 public class ProbModule {
 	int[] sumRules;
 	int[] sumDervation;
+	boolean bAdd = true;
 
 	public ProbModule(int i) {
 		sumRules = new int[i];
@@ -15,7 +16,7 @@ public class ProbModule {
 	}
 
 	public float addDerivation(int rule, int derivation) {
-		if (rule > 0 && derivation > 0) {
+		if (bAdd && rule > 0 && derivation > 0 ) {
 			sumRules[rule]++;
 			sumDervation[derivation]++;
 
@@ -36,6 +37,11 @@ public class ProbModule {
 		}
 
 		return sb.toString();
+	}
+
+	public void setCalculate() {
+		bAdd = false;
+		
 	}
 
 }
