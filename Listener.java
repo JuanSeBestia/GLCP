@@ -1406,6 +1406,11 @@ public class Listener extends Python3BaseListener {
 	static {
 
 	}
+
+	public void setCalculate() {
+		probModule.setCalculate();
+		
+	}
 }
 
 class ParserRuleContextClone extends ParserRuleContext {
